@@ -1,6 +1,6 @@
 
 
-# {Company} Node Library
+# Patch Node Library
 
 [![npm shield](https://img.shields.io/npm/v/@fern-api/patch)](https://www.npmjs.com/package/@fern-api/patch)
 
