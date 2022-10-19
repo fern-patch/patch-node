@@ -5,7 +5,7 @@
 import { PatchApi } from "../../..";
 import * as core from "../../../core";
 
-export type Response = core.APIResponse<void, PatchApi.estimates.createFlightEstimate.Error>;
+export type Response = core.APIResponse<PatchApi.estimates.Estimate, PatchApi.estimates.createFlightEstimate.Error>;
 export type Error = Error._Unknown;
 
 export declare namespace Error {

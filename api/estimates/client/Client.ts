@@ -10,7 +10,9 @@ import * as schemas from "../../../schemas";
 export interface Client {
   retrieve(request: PatchApi.estimates.retrieve.Request): Promise<PatchApi.estimates.retrieve.Response>;
   retrieveList(): Promise<PatchApi.estimates.retrieveList.Response>;
-  createFlightEstimate(): Promise<PatchApi.estimates.createFlightEstimate.Response>;
+  createFlightEstimate(
+    request: PatchApi.estimates.CreateFlightEstimateRequest
+  ): Promise<PatchApi.estimates.createFlightEstimate.Response>;
 }
 
 export declare namespace Client {
@@ -76,18 +78,21 @@ export class Client implements Client {
     };
   }
 
-  public async createFlightEstimate(): Promise<PatchApi.estimates.createFlightEstimate.Response> {
+  public async createFlightEstimate(
+    request: PatchApi.estimates.CreateFlightEstimateRequest
+  ): Promise<PatchApi.estimates.createFlightEstimate.Response> {
     const response = await core.fetcher({
       url: urlJoin(this.options._origin, "/estimates/flight"),
       method: "POST",
       headers: {
         Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options._token)),
       },
+      body: schemas.estimates.CreateFlightEstimateRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: undefined,
+        body: schemas.estimates.Estimate.parse(response.body as schemas.estimates.Estimate.Raw),
       };
     }
 
