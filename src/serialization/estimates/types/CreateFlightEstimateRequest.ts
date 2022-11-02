@@ -4,7 +4,7 @@
 
 import { PatchApi } from "../../..";
 import * as core from "../../../core";
-import * as schemas from "../..";
+import * as serializers from "../..";
 
 export const CreateFlightEstimateRequest: core.schemas.ObjectSchema<
   CreateFlightEstimateRequest.Raw,
@@ -14,7 +14,10 @@ export const CreateFlightEstimateRequest: core.schemas.ObjectSchema<
   originAirport: core.schemas.property("origin_airport", core.schemas.string().optional()),
   destinationAirport: core.schemas.property("destination_airport", core.schemas.string().optional()),
   aircraftCode: core.schemas.property("aircraft_code", core.schemas.string().optional()),
-  cabinClass: core.schemas.property("cabin_class", core.schemas.lazy(() => schemas.estimates.CabinClass).optional()),
+  cabinClass: core.schemas.property(
+    "cabin_class",
+    core.schemas.lazy(() => serializers.estimates.CabinClass).optional()
+  ),
   passengerCount: core.schemas.property("passenger_count", core.schemas.number().optional()),
   projectId: core.schemas.property("project_id", core.schemas.string().optional()),
   createOrder: core.schemas.property("create_order", core.schemas.boolean().optional()),
@@ -26,7 +29,7 @@ export declare namespace CreateFlightEstimateRequest {
     origin_airport?: string | null;
     destination_airport?: string | null;
     aircraft_code?: string | null;
-    cabin_class?: schemas.estimates.CabinClass.Raw | null;
+    cabin_class?: serializers.estimates.CabinClass.Raw | null;
     passenger_count?: number | null;
     project_id?: string | null;
     create_order?: boolean | null;

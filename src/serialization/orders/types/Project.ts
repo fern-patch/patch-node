@@ -4,16 +4,16 @@
 
 import { PatchApi } from "../../..";
 import * as core from "../../../core";
-import * as schemas from "../..";
+import * as serializers from "../..";
 
 export const Project: core.schemas.ObjectSchema<Project.Raw, PatchApi.orders.Project> = core.schemas.object({
-  id: core.schemas.lazy(() => schemas.orders.ProjectId),
+  id: core.schemas.lazy(() => serializers.orders.ProjectId),
   name: core.schemas.string(),
 });
 
 export declare namespace Project {
   interface Raw {
-    id: schemas.orders.ProjectId.Raw;
+    id: serializers.orders.ProjectId.Raw;
     name: string;
   }
 }

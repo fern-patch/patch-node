@@ -23,10 +23,29 @@ export const CabinClass = {
   Economy: _Economy,
   Business: _Business,
   First: _First,
+  _parse: (value: string): CabinClass => {
+    switch (value) {
+      case "economy": {
+        return _Economy;
+      }
+      case "business": {
+        return _Business;
+      }
+      case "first": {
+        return _First;
+      }
+      default: {
+        return {
+          value: value as CabinClass.RawValue,
+          visit: (visitor) => visitor._other(value),
+        };
+      }
+    }
+  },
 } as const;
 
 export declare namespace CabinClass {
-  type RawValue = "economy" | "business" | "first" | string;
+  type RawValue = "economy" | "business" | "first";
 
   interface _Visitor<Result> {
     economy: () => Result;

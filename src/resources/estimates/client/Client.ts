@@ -5,41 +5,35 @@
 import * as core from "../../../core";
 import { PatchApi } from "../../..";
 import urlJoin from "url-join";
-import * as schemas from "../../../schemas";
-
-export interface Client {
-  retrieve(request: PatchApi.estimates.retrieve.Request): Promise<PatchApi.estimates.retrieve.Response>;
-  retrieveList(): Promise<PatchApi.estimates.retrieveList.Response>;
-  createFlightEstimate(
-    request: PatchApi.estimates.CreateFlightEstimateRequest
-  ): Promise<PatchApi.estimates.createFlightEstimate.Response>;
-}
+import * as serializers from "../../../serialization";
 
 export declare namespace Client {
   interface Options {
-    _origin: string;
-    _token?: core.Supplier<core.BearerToken>;
+    environment: string;
+    auth?: {
+      token?: core.Supplier<core.BearerToken>;
+    };
   }
 }
 
 /**
  * Estimates allow API users to approximate the amount of CO₂ equivalent emitted by certain activities. It can also be used to get a quote for the cost of compensating a certain amount of CO₂ emissions.
  */
-export class Client implements Client {
+export class Client {
   constructor(private readonly options: Client.Options) {}
 
   public async retrieve(request: PatchApi.estimates.retrieve.Request): Promise<PatchApi.estimates.retrieve.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, `/estimates/${request.id}`),
+      url: urlJoin(this.options.environment, `/estimates/${request.id}`),
       method: "GET",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options._token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: schemas.estimates.Estimate.parse(response.body as schemas.estimates.Estimate.Raw),
+        body: serializers.estimates.Estimate.parse(response.body as serializers.estimates.Estimate.Raw),
       };
     }
 
@@ -55,16 +49,16 @@ export class Client implements Client {
 
   public async retrieveList(): Promise<PatchApi.estimates.retrieveList.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, "/estimates/"),
+      url: urlJoin(this.options.environment, "/estimates/"),
       method: "GET",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options._token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
     });
     if (response.ok) {
       return {
         ok: true,
-        body: schemas.estimates.retrieveList.Response.parse(response.body as schemas.estimates.Estimate.Raw[]),
+        body: serializers.estimates.retrieveList.Response.parse(response.body as serializers.estimates.Estimate.Raw[]),
       };
     }
 
@@ -82,17 +76,17 @@ export class Client implements Client {
     request: PatchApi.estimates.CreateFlightEstimateRequest
   ): Promise<PatchApi.estimates.createFlightEstimate.Response> {
     const response = await core.fetcher({
-      url: urlJoin(this.options._origin, "/estimates/flight"),
+      url: urlJoin(this.options.environment, "/estimates/flight"),
       method: "POST",
       headers: {
-        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options._token)),
+        Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.auth?.token)),
       },
-      body: schemas.estimates.CreateFlightEstimateRequest.json(request),
+      body: serializers.estimates.CreateFlightEstimateRequest.json(request),
     });
     if (response.ok) {
       return {
         ok: true,
-        body: schemas.estimates.Estimate.parse(response.body as schemas.estimates.Estimate.Raw),
+        body: serializers.estimates.Estimate.parse(response.body as serializers.estimates.Estimate.Raw),
       };
     }
 

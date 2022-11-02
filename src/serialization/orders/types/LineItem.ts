@@ -4,11 +4,11 @@
 
 import { PatchApi } from "../../..";
 import * as core from "../../../core";
-import * as schemas from "../..";
+import * as serializers from "../..";
 
 export const LineItem: core.schemas.ObjectSchema<LineItem.Raw, PatchApi.orders.LineItem> = core.schemas.object({
-  id: core.schemas.lazy(() => schemas.orders.ItemId),
-  project: core.schemas.lazyObject(() => schemas.orders.Project),
+  id: core.schemas.lazy(() => serializers.orders.ItemId),
+  project: core.schemas.lazyObject(() => serializers.orders.Project),
   vintageYear: core.schemas.property("vintage_year", core.schemas.number()),
   amount: core.schemas.number(),
   unit: core.schemas.string(),
@@ -18,8 +18,8 @@ export const LineItem: core.schemas.ObjectSchema<LineItem.Raw, PatchApi.orders.L
 
 export declare namespace LineItem {
   interface Raw {
-    id: schemas.orders.ItemId.Raw;
-    project: schemas.orders.Project.Raw;
+    id: serializers.orders.ItemId.Raw;
+    project: serializers.orders.Project.Raw;
     vintage_year: number;
     amount: number;
     unit: string;

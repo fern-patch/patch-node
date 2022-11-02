@@ -19,8 +19,6 @@ __metadata:
     prettier: 2.7.1
     typescript: 4.6.4
     url-join: 4.0.1
-  peerDependencies:
-    axios: "*"
   languageName: unknown
   linkType: soft
 
@@ -34,9 +32,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 18.11.2
-  resolution: "@types/node@npm:18.11.2"
-  checksum: 0ff5c90fb9ab653e018b858479aea4d2f763b07b31f9502383d408936f525ca37cac82ea27774a0dd0356ff9badba2792a6a3fff94f79fd7c82ee2a892c43ed5
+  version: 18.11.9
+  resolution: "@types/node@npm:18.11.9"
+  checksum: cc0aae109e9b7adefc32eecb838d6fad931663bb06484b5e9cbbbf74865c721b03d16fd8d74ad90e31dbe093d956a7c2c306ba5429ba0c00f3f7505103d7a496
   languageName: node
   linkType: hard
 

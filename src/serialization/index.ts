@@ -4,4 +4,3 @@ export * as estimates from "./estimates";
 export * from "./estimates/types";
 export * as orders from "./orders";
 export * from "./orders/types";
-export * from "./Client";

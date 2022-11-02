@@ -4,10 +4,10 @@
 
 import { PatchApi } from "../../..";
 import * as core from "../../../core";
-import * as schemas from "../..";
+import * as serializers from "../..";
 
 export const Order: core.schemas.ObjectSchema<Order.Raw, PatchApi.orders.Order> = core.schemas.object({
-  id: core.schemas.lazy(() => schemas.orders.OrderId),
+  id: core.schemas.lazy(() => serializers.orders.OrderId),
   createdAt: core.schemas.property("created_at", core.schemas.string()),
   production: core.schemas.boolean(),
   state: core.schemas.string(),
@@ -20,14 +20,14 @@ export const Order: core.schemas.ObjectSchema<Order.Raw, PatchApi.orders.Order> 
   metadata: core.schemas.string().optional(),
   lineItems: core.schemas.property(
     "line_items",
-    core.schemas.list(core.schemas.lazyObject(() => schemas.orders.LineItem))
+    core.schemas.list(core.schemas.lazyObject(() => serializers.orders.LineItem))
   ),
-  issuedTo: core.schemas.property("issued_to", core.schemas.lazyObject(() => schemas.orders.IssuedTo).optional()),
+  issuedTo: core.schemas.property("issued_to", core.schemas.lazyObject(() => serializers.orders.IssuedTo).optional()),
 });
 
 export declare namespace Order {
   interface Raw {
-    id: schemas.orders.OrderId.Raw;
+    id: serializers.orders.OrderId.Raw;
     created_at: string;
     production: boolean;
     state: string;
@@ -38,7 +38,7 @@ export declare namespace Order {
     currency?: string | null;
     registry_url?: string | null;
     metadata?: string | null;
-    line_items: schemas.orders.LineItem.Raw[];
-    issued_to?: schemas.orders.IssuedTo.Raw | null;
+    line_items: serializers.orders.LineItem.Raw[];
+    issued_to?: serializers.orders.IssuedTo.Raw | null;
   }
 }
